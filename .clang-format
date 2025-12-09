@@ -1,0 +1,29 @@
+---
+# style standard LLVM 
+BasedOnStyle: LLVM
+
+# --- Indentation ---
+# 4 espaces pour le standard VS Code 
+IndentWidth: 4
+TabWidth: 4
+# Pas de tabulations 
+UseTab: Never
+
+# --- Largeur de ligne ---
+# 120 caractères avant de passer à la ligne 
+ColumnLimit: 120
+
+# --- Accolades ---
+BreakBeforeBraces: Attach
+
+# --- Espaces ---
+# espace après // 
+SpacesBeforeTrailingComments: 1
+SpacesInParentheses: false
+
+# --- C++ Moderne ---
+# trier les #include par ordre alphabétique
+SortIncludes: true
+# garder blocs vides sur une seule ligne
+AllowShortBlocksOnASingleLine: Empty
+
