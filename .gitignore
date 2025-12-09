@@ -40,5 +40,12 @@
 # debug information files
 *.dwo
 
-#IDE files
+# IDE files
 .vscode
+
+# cmake output
+build
+.cache
+
+# data
+data/*.log
