@@ -1,12 +1,12 @@
 #include "MMapLoader.hpp"
 #include <fcntl.h>      // open
+#include <filesystem>   //std::filesystem::path
 #include <iostream>     // logs
 #include <string>       // std::string
 #include <sys/mman.h>   // mmap, munmap
 #include <sys/stat.h>   // fstat
 #include <system_error> // std::system_error
 #include <unistd.h>     // close
-#include <filesystem>   //std::filesystem::path
 
 // constructeur
 MMapLoader::MMapLoader(std::string_view file) : m_addr(nullptr), m_length(0), m_fd(-1) {
@@ -37,7 +37,8 @@ MMapLoader::MMapLoader(std::string_view file) : m_addr(nullptr), m_length(0), m_
         }
         madvise(m_addr, m_length, MADV_HUGEPAGE);
     }
-    madvise(m_addr, m_length, MADV_SEQUENTIAL);
+    // madvise(m_addr, m_length, MADV_SEQUENTIAL);
+    madvise(m_addr, m_length, MADV_WILLNEED);
 }
 
 // destructeur
