@@ -1,3 +1,6 @@
+
+#--- Basic script
+
 # 1. 100 MB seed
 python3 generate_seed.py
 
@@ -7,3 +10,13 @@ for i in {1..10}; do cat seed.log >> 1gb.log; done
 # 3. 50 GB (50 x 1 GB)
 # might take a little while, see the status with 'watch ls -lh'
 for i in {1..50}; do cat 1gb.log >> 50gb.log; done
+
+
+# --- Advanced script
+
+// WARNING to be launched from project root
+python3 generate_advanced_logs.py
+
+touch final_10gb.log
+
+for i in {1..10}; do cat heavy_traffic.log >> final_10gb.log; done
