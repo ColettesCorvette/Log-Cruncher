@@ -1,6 +1,6 @@
 #include "timer.hpp"
-#include <iostream>
 #include <cstdio> // snprintf
+#include <iostream>
 
 std::string formatSize(size_t bytes) {
     const char *suffixes[] = {"B", "KB", "MB", "GB", "TB"};
