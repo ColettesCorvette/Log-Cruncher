@@ -15,6 +15,9 @@ void Analyzer::analyze(std::string_view view) {
     //  vecteur de 512 bits rempli partout avec le caractère '\n'
     const __m512i target = _mm512_set1_epi8('\n');
 
+    // parallélisme
+    uint64_t count1 = 0, count2 = 0, count3 = 0, count4 = 0;
+
     // Boucle principale (AVX), tant qu'il reste au moins 4 * 64 = 256 octets à lire
     while (cursor + 256 <= end) {
 
@@ -35,14 +38,16 @@ void Analyzer::analyze(std::string_view view) {
         __mmask64 mask4 = _mm512_cmpeq_epi8_mask(chunk4, target);
 
         // _popcnt64 est une instruction hardware qui compte le nombre de bits à 1
-        m_lineCount += _popcnt64(mask1);
-        m_lineCount += _popcnt64(mask2);
-        m_lineCount += _popcnt64(mask3);
-        m_lineCount += _popcnt64(mask4);
+        count1 += _popcnt64(mask1);
+        count2 += _popcnt64(mask2);
+        count3 += _popcnt64(mask3);
+        count4 += _popcnt64(mask4);
 
         // Avance de 256
         cursor += 256;
     }
+
+    m_lineCount += count1 + count2 + count3 + count4;
 
     // Fallback pour les blocs restants compris entre 64 et 255 octets
     while (cursor + 64 <= end) {

@@ -2,8 +2,8 @@
 #include "Analyzer.hpp"
 #include "MMapLoader.hpp"
 
-#include <chrono>  // Pour le chronomètre haute précision
-#include <iomanip> // Pour std::setprecision (formatage des nombres)
+#include <chrono>  // chronomètre haute précision
+#include <iomanip> // std::setprecision (formatage des nombres)
 #include <iostream>
 #include <vector>
 
@@ -20,36 +20,34 @@ int main(int argc, char *argv[]) {
     try {
         const char *filepath = argv[1];
 
-        // Chargement IO
         std::cout << "[INFO] Loading file: " << filepath << "..." << std::endl;
-
-        // Timer global
         MMapLoader loader(filepath);
         std::string_view view = loader.getView();
+        std::cout << "[INFO] File mapped. Size: " << formatSize(view.size()) << std::endl;
 
-        std::cout << "[INFO] File mapped into memory. Size: " << formatSize(view.size()) << std::endl;
-
-        // Analyse AVX-512
         Analyzer analyzer;
 
-        std::cout << "[INFO] Starting high-performance analysis..." << std::endl;
-
-        // Démarrage du chronomètre
-        auto start = std::chrono::high_resolution_clock::now();
-
-        // fonction core
+        // --- WARMUP ---
+        // force l'OS à mapper physiquement toutes les pages en RAM.
+        // met les lignes de cache CPU en état "Ready".
+        std::cout << "[INFO] Warming up cache & Page Tables..." << std::endl;
         analyzer.analyze(view);
 
-        // Arrêt du chronomètre
+        // --- BENCHMARK ---
+        std::cout << "[INFO] Starting Benchmark run..." << std::endl;
+
+        auto start = std::chrono::high_resolution_clock::now();
+
+        // processing function
+        analyzer.analyze(view);
+
         auto end = std::chrono::high_resolution_clock::now();
 
-        // Reporting & Benchmarks
+        // --- RESULTATS ---
         std::chrono::duration<double> elapsed = end - start;
         double seconds = elapsed.count();
         size_t lines = analyzer.getLineCount();
 
-        // Calcul du débit (Throughput) : Quantité de données / Temps
-        // convertion de la taille en Gigaoctets par seconde (GB/s)
         double gigabytes = static_cast<double>(view.size()) / (1024.0 * 1024.0 * 1024.0);
         double throughput = gigabytes / seconds;
 
