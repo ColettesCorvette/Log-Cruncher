@@ -5,11 +5,11 @@ import os
 
 # --- CONFIGURATION ---
 OUTPUT_FILE = "heavy_traffic.log"
-TARGET_SIZE_GB = 1  # On génère 1 Go de "Vrai" aléatoire (tu pourras le multiplier après)
-CHUNK_SIZE = 100000 # Nombre de lignes par écriture disque (pour la perf)
+TARGET_SIZE_GB = 1  # génère 1 Go d'aléatoire 
+CHUNK_SIZE = 100000 # nombre de lignes par écriture disque 
 
 # --- SCÉNARIO ---
-# Les 10 IPs du Botnet (ce sont elles que ton C++ devra trouver dans le top 10)
+# 10 IPs 
 BOTNET_IPS = [f"10.66.6.{i}" for i in range(1, 11)]
 
 HTTP_CODES = ["200", "404", "500", "301", "403"]
@@ -24,7 +24,7 @@ def generate_chunk():
     """Génère un gros bloc de texte en mémoire"""
     lines = []
     for _ in range(CHUNK_SIZE):
-        # 10% de chance que ce soit le Botnet (l'attaque), 90% random
+        # 10% de chance que ce soit l'attaque, 90% random
         if random.random() < 0.10:
             ip = random.choice(BOTNET_IPS)
             msg = "DDOS_ATTACK_SIGNATURE"
@@ -33,12 +33,11 @@ def generate_chunk():
             msg = "Normal_User_Activity"
 
         # Format standard Nginx/Apache simplifié
-        # Exemple: 2023-10-27T10:00:00 [INFO] GET /login 200 from IP 192.168.1.1
         timestamp = time.strftime("%Y-%m-%dT%H:%M:%S")
         code = random.choice(HTTP_CODES)
         url = random.choice(URLS)
         
-        # NOTE IMPORTANTE : J'ajoute "from IP" pour faciliter ton parsing C++ plus tard
+        # NOTE IMPORTANTE : ajout "from IP" pour faciliter le parsing C++ plus tard
         line = f"{timestamp} [INFO] GET {url} {code} {msg} from IP {ip}\n"
         lines.append(line)
     return "".join(lines)
