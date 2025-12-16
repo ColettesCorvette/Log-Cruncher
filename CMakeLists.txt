@@ -13,7 +13,7 @@ set(HEADERS
     include/MMapLoader.hpp
 )
 
-add_executable(lcruncher ${SOURCES} ${HEADERS})
+add_executable(lcruncher ${SOURCES} ${HEADERS} benchmarks/timer.cpp)
 
 target_include_directories(lcruncher PRIVATE include)
 target_compile_features(lcruncher PRIVATE cxx_std_17)

@@ -1,3 +1,4 @@
+#include "../benchmarks/timer.hpp"
 #include "Analyzer.hpp"
 #include "MMapLoader.hpp"
 
@@ -5,21 +6,6 @@
 #include <iomanip> // Pour std::setprecision (formatage des nombres)
 #include <iostream>
 #include <vector>
-
-// convertir la taille en unités lisibles
-std::string formatSize(size_t bytes) {
-    const char *suffixes[] = {"B", "KB", "MB", "GB", "TB"};
-    int i = 0;
-    double dblBytes = bytes;
-    if (bytes > 1024) {
-        for (i = 0; (bytes / 1024) > 0 && i < 4; i++, bytes /= 1024)
-            dblBytes = bytes / 1024.0;
-    }
-
-    char output[50];
-    sprintf(output, "%.2f %s", dblBytes, suffixes[i]);
-    return std::string(output);
-}
 
 int main(int argc, char *argv[]) {
 
