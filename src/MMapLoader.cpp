@@ -6,12 +6,13 @@
 #include <sys/stat.h>   // fstat
 #include <system_error> // std::system_error
 #include <unistd.h>     // close
+#include <filesystem>   //std::filesystem::path
 
 // constructeur
 MMapLoader::MMapLoader(std::string_view file) : m_addr(nullptr), m_length(0), m_fd(-1) {
 
     // ouverture du fichier en lecteur seule
-    if ((m_fd = open(std::string(file).c_str(), O_RDONLY)) == -1) {
+    if ((m_fd = open(std::filesystem::path(file).c_str(), O_RDONLY)) == -1) {
         throw std::system_error(errno, std::generic_category(), "Failed to open the file");
     }
 
