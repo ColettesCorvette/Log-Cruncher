@@ -1,6 +1,6 @@
 # Log-Cruncher
 
-![Version](https://img.shields.io/badge/version-v0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-v0.2-blue.svg)
 ![Language](https://img.shields.io/badge/language-C++-green.svg)
 
 # 1. Génération des fichiers de build Makefiles
