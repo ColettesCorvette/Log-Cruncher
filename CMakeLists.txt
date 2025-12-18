@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 4.2)
-project(lcruncher VERSION 1.0 LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.30)
+project(lcruncher VERSION 0.2 LANGUAGES CXX)
 
 # --- CONFIGURATION ---
 set(SOURCES
