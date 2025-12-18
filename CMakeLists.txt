@@ -29,7 +29,7 @@ endif()
 # --- AVX/AVX2 ---
 if(NOT MSVC)
     target_compile_options(lcruncher PRIVATE -march=native)
-    # for github's potato servers, so that it does not trigger "Wait avx512 insctuctions unsupported, I'll fail the build"
+    # for github's potato servers, so that it does not trigger "Wait avx512 instructions unsupported, I'll fail the build"
     target_compile_options(lcruncher PRIVATE -mavx512f -mavx512bw -mavx512dq -Wno-psabi)
 endif()
 
