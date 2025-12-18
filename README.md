@@ -17,6 +17,6 @@ cmake --build build --parallel
 # 3. Lancer l'exécutable
 ./build/lcruncher <fichier>
 
-# 4. formatte les fichiers avec .clang
+# 4. formate les fichiers avec .clang
 find src include -name "*.cpp" -o -name "*.hpp" | xargs clang-format -i
 
